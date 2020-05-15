@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 //mongoose.connect('mongodb://localhost:27017/pms', {useNewUrlParser: true, useCreateIndex: true});
-mongoose.connect('mongodb://pd4184:pd41849630@172.30.168.219:27017/pmdb', {useNewUrlParser: true, useCreateIndex: true});
+mongoose.connect('mongodb://pd4184:pd41849630@172.30.168.219:27017/sampledb', {useNewUrlParser: true, useCreateIndex: true});
 var conn = mongoose.Collection;
 var passCatSchema = new mongoose.Schema({
     password_category: {
