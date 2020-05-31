@@ -19,7 +19,7 @@ function checkMail(req, res, next){
     if(err)
     throw err;
     if(data)
-    return res.render('signup', {title:'Password Management System', msg:'User already registered'});
+    return res.render('signup', {title:'Password Management System', msg:'User already registered! Please Signup again.'});
     next();
   })
 }
@@ -31,7 +31,7 @@ function checkUsername(req, res, next){
     if(err)
     throw err;
     if(data)
-    return res.render('signup', {title:'Password Management System', msg:'Username already exist'});
+    return res.render('signup', {title:'Password Management System', msg:'Username already exist! Please Signup again.'});
     next();
   })
 }
@@ -48,6 +48,7 @@ function checkLoginUser(req, res, next){
   next();
 }
 router.get('/', function(req, res, next) {
+  console.log("front page");
   var loginUser = localStorage.getItem('loginUser');
   if(loginUser)
   res.redirect('/dashboard');
@@ -60,13 +61,19 @@ router.post('/', function(req, res, next) {
   var uname = req.body.uname;
   var password = req.body.password;
   
+  console.log(uname);
+  console.log(password);
   
   var checkUser = userModule.findOne({username: uname});
+  
   checkUser.exec((err, data) =>{
-    
-    if(err)
+    if(data==null){
+      res.render('index', { title: 'Password Management System', msg: 'Invalid Username or Password'});
+    }else{
+    if(err){
+      
     throw err;
-
+    }
     var getPassword = data.password;
     var getUserID = data._id;
     
@@ -78,7 +85,7 @@ router.post('/', function(req, res, next) {
     }
     else
     res.render('index', { title: 'Password Management System', msg: 'Invalid Username or Password'});
-
+  }
   })
   
 });
@@ -104,7 +111,7 @@ router.post('/signup', checkMail, checkUsername, (req, res, next) => {
   var confpassword = req.body.confpassword;
 
   if(password != confpassword)
-  res.render('signup', {title:'Password Management System', msg:' Password doesn\'t match'});
+  res.render('signup', {title:'Password Management System', msg:' Password doesn\'t match! Please Signup again.'});
   else{
   
    var userDetails = new userModule({
@@ -117,7 +124,7 @@ router.post('/signup', checkMail, checkUsername, (req, res, next) => {
     if(err)
     throw err;
   
-    res.render('signup', {title:'Password Management System', msg:'User registerd successfully '});
+    res.render('signup', {title:'Password Management System', msg:'User registerd successfully.',});
     })
   }
   });
