@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
-
+try{
 //mongoose.connect('mongodb://localhost:27017/pms', {useNewUrlParser: true, useCreateIndex: true});
 //mongoose.connect('mongodb://pd4184:pd41849630@172.30.168.219:27017/sampledb', {useNewUrlParser: true, useCreateIndex: true});
-try{
+
 mongoose.connect('mongodb+srv://pd4184:pd41849630@pandu-m7ddl.mongodb.net/pmdb',{useNewUrlParser: true, useCreateIndex: true});
 }catch(e){
-    console.log(e.name + ':' + e.message);
+    console.error(e);
 }
 var conn = mongoose.Collection;
 var passwordSchema = new mongoose.Schema({
